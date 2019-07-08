@@ -9,14 +9,14 @@
 import Foundation
 import GameplayKit
 
-class Concentration {
+struct Concentration {
     
     // MARK: Properties
     
     // The number of times the player flipped a card.
     var flipsCount = 0
     
-    var cards = [Card]()
+    private(set) var cards = [Card]()
     
     /*  The only flipped card index.
         Used to track the first chosen card of a pair.
@@ -33,7 +33,7 @@ class Concentration {
     
     var endTime = Date()
     
-    func timer() {
+    mutating func timer() {
         endTime = Date()
         let timeInterval: Double = endTime.timeIntervalSince(startTime)
         
@@ -47,15 +47,16 @@ class Concentration {
         }
     }
     
-    func increaseFlipCount() {
+    mutating func increaseFlipCount() {
         flipsCount += 1
     }
     
-    func resetFlipCount() {
+    mutating func resetFlipCount() {
         flipsCount = 0
     }
         
-    func chooseCard(at index: Int) {
+    mutating func chooseCard(at index: Int) {
+        assert(cards.indices.contains(index), "Concentration.chooseCard(at: \(index)): chosen index is not in cards")
         if !cards[index].isMatched {
             if let matchIndex = indexOfOneAndOnlyFaceUpCard, matchIndex != index {
                 timer()
@@ -112,7 +113,7 @@ class Concentration {
         shuffleCards()
     }
     
-    func shuffleCards() {
+    mutating func shuffleCards() {
         // cards = GKRandomSource.sharedRandom().arrayByShufflingObjects(in: cards) as! [Card]
         
         for _ in 0..<cards.count {
@@ -121,7 +122,7 @@ class Concentration {
         }
     }
     
-    func resetGame() {
+    mutating func resetGame() {
         flipsCount = 0
         //cards.removeAll()
         

@@ -10,7 +10,7 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    lazy var game = Concentration(numberOfPairsOfCards: (cardButtons.count + 1 ) / 2)
+    private lazy var game = Concentration(numberOfPairsOfCards: (cardButtons.count + 1 ) / 2)
     
     //var flipCount = 0 { didSet { flipCountLabel.text = "Flips: \(flipCount)" } }
     
@@ -22,38 +22,38 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var newGameButton: UIButton!
     
-    var emojiChoices = [String]()
+    private var emojiChoices = [String]()
     
-    var emoji = [Int:String]()
+    private var emoji = [Int:String]()
     
-    let gameTheme = ["flags":       ["🇧🇷", "🇧🇪", "🇯🇵", "🇨🇦", "🇺🇸", "🇵🇪", "🇮🇪", "🇦🇷"],
+    private let gameTheme = ["flags":       ["🇧🇷", "🇧🇪", "🇯🇵", "🇨🇦", "🇺🇸", "🇵🇪", "🇮🇪", "🇦🇷"],
                      "faces":       ["😀", "🙄", "😡", "🤢", "🤡", "😱", "😍", "🤠"],
                      "sports":      ["🏌️", "🤼‍♂️", "🥋", "🏹", "🥊", "🏊", "🤾🏿‍♂️", "🏇🏿"],
                      "animals":     ["🦊", "🐼", "🦁", "🐘", "🐓", "🦀", "🐷", "🦉"],
                      "fruits":      ["🥑", "🍍", "🍆", "🍠", "🍉", "🍇", "🥝", "🍒"],
                      "appliances":  ["💻", "🖥", "⌚️", "☎️", "🖨", "🖱", "📱", "⌨️"]]
     
-    let gameBackgroundColor = ["flags":       #colorLiteral(red: 0.9029450762, green: 0.9984180331, blue: 0.9052613646, alpha: 1),
+    private let gameBackgroundColor = ["flags":       #colorLiteral(red: 0.9029450762, green: 0.9984180331, blue: 0.9052613646, alpha: 1),
                                "faces":       #colorLiteral(red: 0.9764705896, green: 0.9112239829, blue: 0.7712850951, alpha: 1),
                                "sports":      #colorLiteral(red: 0.6874793981, green: 0.8951661441, blue: 0.9764705896, alpha: 1),
                                "animals":     #colorLiteral(red: 0.9568627477, green: 0.8139937659, blue: 0.7588721059, alpha: 1),
                                "fruits":      #colorLiteral(red: 0.7586845559, green: 0.8862745166, blue: 0.7254639859, alpha: 1),
                                "appliances":  #colorLiteral(red: 0.6413674627, green: 0.7296561239, blue: 0.7568627596, alpha: 1)]
     
-    let gameCardColor = ["flags":      #colorLiteral(red: 0.3455402499, green: 0.9984180331, blue: 0.7153486602, alpha: 1),
+    private let gameCardColor = ["flags":      #colorLiteral(red: 0.3455402499, green: 0.9984180331, blue: 0.7153486602, alpha: 1),
                         "faces":       #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1),
                         "sports":      #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1),
                         "animals":     #colorLiteral(red: 0.9098039269, green: 0.4784313738, blue: 0.6431372762, alpha: 1),
                         "fruits":      #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1),
                         "appliances":  #colorLiteral(red: 0.3752103863, green: 0.5510096898, blue: 0.7568627596, alpha: 1)]
     
-    var choseThemeAlready = false
+    private var choseThemeAlready = false
     
-    var buttonsColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+    private var buttonsColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
     
-    var backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+    private var backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
     
-    @IBAction func touchCard(_ sender: UIButton) {
+    @IBAction private func touchCard(_ sender: UIButton) {
         if !choseThemeAlready {
             chooseRandomTheme()
         }
@@ -72,7 +72,7 @@ class ViewController: UIViewController {
         flipCountLabel.text = "Flips: \(game.flipsCount)"
     }
     
-    func updateViewFromModel() {
+    private func updateViewFromModel() {
         
         newGameButton.backgroundColor = buttonsColor
         newGameButton.setTitleColor(backgroundColor, for: UIControlState.normal)
@@ -96,15 +96,15 @@ class ViewController: UIViewController {
         }
     }
     
-    func emoji(for card: Card) -> String {
+    private func emoji(for card: Card) -> String {
         if emoji[card.identifier] == nil, emojiChoices.count > 0 {
-            let randomIndex = Int(arc4random_uniform(UInt32(emojiChoices.count)))
-            emoji[card.identifier] = emojiChoices.remove(at: randomIndex)
+            // let randomIndex = Int(arc4random_uniform(UInt32(emojiChoices.count)))
+            emoji[card.identifier] = emojiChoices.remove(at: emojiChoices.count.arc4random)
         }
         return emoji[card.identifier] ?? "?"
     }
     
-    @IBAction func newGame(_ sender: Any) {
+    @IBAction private func newGame(_ sender: Any) {
         game.resetFlipCount()
         emojiChoices.removeAll()
         game.score = 0
@@ -125,7 +125,7 @@ class ViewController: UIViewController {
         updateViewFromModel()
     }
     
-    func chooseRandomTheme() {
+    private func chooseRandomTheme() {
         emojiChoices.removeAll()
         
         let gameThemeKeys  = Array(gameTheme.keys)
@@ -140,6 +140,18 @@ class ViewController: UIViewController {
         }
         
         choseThemeAlready = true
+    }
+}
+
+extension Int {
+    var arc4random: Int {
+        if self > 0 {
+            return Int(arc4random_uniform(UInt32(self)))
+        } else if self < 0 {
+            return -Int(arc4random_uniform(UInt32(abs(self))))
+        } else {
+            return 0
+        }
     }
 }
 

@@ -10,21 +10,23 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    private lazy var game = Concentration(numberOfPairsOfCards: (cardButtons.count + 1 ) / 2)
+    // MARK: - Properties
     
-    //var flipCount = 0 { didSet { flipCountLabel.text = "Flips: \(flipCount)" } }
+    private lazy var game = Concentration(numberOfPairsOfCards: (cardButtons.count + 1 ) / 2)
+    private var choseThemeAlready = false
+    private var buttonsColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+    private var backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+    private var emojiChoices = [String]()
+    private var emoji = [Card:String]()
+    
+    // MARK: - UI Elements
     
     @IBOutlet weak var flipCountLabel: UILabel!
-    
     @IBOutlet weak var scoreLabel: UILabel!
-    
     @IBOutlet var cardButtons: [UIButton]!
-    
     @IBOutlet weak var newGameButton: UIButton!
     
-    private var emojiChoices = [String]()
-    
-    private var emoji = [Card:String]()
+    // MARK: - Enums
     
     private let gameTheme = ["flags":       ["🇧🇷", "🇧🇪", "🇯🇵", "🇨🇦", "🇺🇸", "🇵🇪", "🇮🇪", "🇦🇷"],
                      "faces":       ["😀", "🙄", "😡", "🤢", "🤡", "😱", "😍", "🤠"],
@@ -47,11 +49,16 @@ class ViewController: UIViewController {
                         "fruits":      #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1),
                         "appliances":  #colorLiteral(red: 0.3752103863, green: 0.5510096898, blue: 0.7568627596, alpha: 1)]
     
-    private var choseThemeAlready = false
+    // MARK: - Auxiliary Methods
     
-    private var buttonsColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+    private func emoji(for card: Card) -> String {
+        if emoji[card] == nil, emojiChoices.count > 0 {
+            emoji[card] = emojiChoices.remove(at: emojiChoices.count.arc4random)
+        }
+        return emoji[card] ?? "?"
+    }
     
-    private var backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+    // MARK: - UI Methods
     
     @IBAction private func touchCard(_ sender: UIButton) {
         if !choseThemeAlready {
@@ -62,7 +69,6 @@ class ViewController: UIViewController {
             game.chooseCard(at: cardNumber)
             updateViewFromModel()
             
-            // only increase flip count if the card is unmatched
             if !game.cards[cardNumber].isMatched {
                 game.increaseFlipCount()
             }
@@ -94,14 +100,6 @@ class ViewController: UIViewController {
                 button.backgroundColor = card.isMatched ? #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 0) : buttonsColor
             }
         }
-    }
-    
-    private func emoji(for card: Card) -> String {
-        if emoji[card] == nil, emojiChoices.count > 0 {
-            // let randomIndex = Int(arc4random_uniform(UInt32(emojiChoices.count)))
-            emoji[card] = emojiChoices.remove(at: emojiChoices.count.arc4random)
-        }
-        return emoji[card] ?? "?"
     }
     
     @IBAction private func newGame(_ sender: Any) {
@@ -142,6 +140,8 @@ class ViewController: UIViewController {
         choseThemeAlready = true
     }
 }
+
+// MARK: - Extensions
 
 extension Int {
     var arc4random: Int {

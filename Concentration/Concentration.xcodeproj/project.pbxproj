@@ -105,10 +105,8 @@
 				C57DADFE22CB5BA5001E09D2 /* Card.swift */,
 				C57DADCF22CA57A3001E09D2 /* ViewController.swift */,
 				C57DADD122CA57A3001E09D2 /* Main.storyboard */,
-				C57DADCD22CA57A3001E09D2 /* AppDelegate.swift */,
 				C57DADD422CA57A5001E09D2 /* Assets.xcassets */,
 				C57DADFB22CA5A6F001E09D2 /* Supporting Files */,
-				C57DADD622CA57A5001E09D2 /* LaunchScreen.storyboard */,
 				C57DADD922CA57A5001E09D2 /* Info.plist */,
 			);
 			path = Concentration;
@@ -135,6 +133,8 @@
 		C57DADFB22CA5A6F001E09D2 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				C57DADD622CA57A5001E09D2 /* LaunchScreen.storyboard */,
+				C57DADCD22CA57A3001E09D2 /* AppDelegate.swift */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";

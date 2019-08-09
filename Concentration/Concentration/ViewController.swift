@@ -133,10 +133,6 @@ class ViewController: UIViewController {
         backgroundColor = Array(gameBackgroundColor.values)[gameThemeIndex]
         buttonsColor = Array(gameCardColor.values)[gameThemeIndex]
         
-        for index in 0..<emojiChoices.count {
-            print("\(emojiChoices[index])")
-        }
-        
         choseThemeAlready = true
     }
 }

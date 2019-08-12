@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  ConcentrationViewController.swift
 //  Concentration
 //
 //  Created by Madalina Sinca on 01/07/2019.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ConcentrationViewController: UIViewController {
     
     // MARK: - Properties
     
@@ -18,6 +18,13 @@ class ViewController: UIViewController {
     private var backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
     private var emojiChoices = [String]()
     private var emoji = [Card:String]()
+    var theme: [String]? {
+        didSet {
+            emojiChoices = theme ?? [""]
+            emoji = [:]
+            updateViewFromModel()
+        }
+    }
     
     // MARK: - UI Elements
     
@@ -28,26 +35,26 @@ class ViewController: UIViewController {
     
     // MARK: - Enums
     
-    private let gameTheme = ["flags":       ["🇧🇷", "🇧🇪", "🇯🇵", "🇨🇦", "🇺🇸", "🇵🇪", "🇮🇪", "🇦🇷"],
-                     "faces":       ["😀", "🙄", "😡", "🤢", "🤡", "😱", "😍", "🤠"],
-                     "sports":      ["🏌️", "🤼‍♂️", "🥋", "🏹", "🥊", "🏊", "🤾🏿‍♂️", "🏇🏿"],
-                     "animals":     ["🦊", "🐼", "🦁", "🐘", "🐓", "🦀", "🐷", "🦉"],
-                     "fruits":      ["🥑", "🍍", "🍆", "🍠", "🍉", "🍇", "🥝", "🍒"],
-                     "appliances":  ["💻", "🖥", "⌚️", "☎️", "🖨", "🖱", "📱", "⌨️"]]
+    let gameTheme = ["flags":       ["🇧🇷", "🇧🇪", "🇯🇵", "🇨🇦", "🇺🇸", "🇵🇪", "🇮🇪", "🇦🇷"],
+                    "faces":       ["😀", "🙄", "😡", "🤢", "🤡", "😱", "😍", "🤠"],
+                    "sports":      ["🏌️", "🤼‍♂️", "🥋", "🏹", "🥊", "🏊", "🤾🏿‍♂️", "🏇🏿"],
+                    "animals":     ["🦊", "🐼", "🦁", "🐘", "🐓", "🦀", "🐷", "🦉"],
+                    "fruits":      ["🥑", "🍍", "🍆", "🍠", "🍉", "🍇", "🥝", "🍒"],
+                    "appliances":  ["💻", "🖥", "⌚️", "☎️", "🖨", "🖱", "📱", "⌨️"]]
     
     private let gameBackgroundColor = ["flags":       #colorLiteral(red: 0.9029450762, green: 0.9984180331, blue: 0.9052613646, alpha: 1),
-                               "faces":       #colorLiteral(red: 0.9764705896, green: 0.9112239829, blue: 0.7712850951, alpha: 1),
-                               "sports":      #colorLiteral(red: 0.6874793981, green: 0.8951661441, blue: 0.9764705896, alpha: 1),
-                               "animals":     #colorLiteral(red: 0.9568627477, green: 0.8139937659, blue: 0.7588721059, alpha: 1),
-                               "fruits":      #colorLiteral(red: 0.7586845559, green: 0.8862745166, blue: 0.7254639859, alpha: 1),
-                               "appliances":  #colorLiteral(red: 0.6413674627, green: 0.7296561239, blue: 0.7568627596, alpha: 1)]
+                                       "faces":       #colorLiteral(red: 0.9764705896, green: 0.9112239829, blue: 0.7712850951, alpha: 1),
+                                       "sports":      #colorLiteral(red: 0.6874793981, green: 0.8951661441, blue: 0.9764705896, alpha: 1),
+                                       "animals":     #colorLiteral(red: 0.9568627477, green: 0.8139937659, blue: 0.7588721059, alpha: 1),
+                                       "fruits":      #colorLiteral(red: 0.7586845559, green: 0.8862745166, blue: 0.7254639859, alpha: 1),
+                                       "appliances":  #colorLiteral(red: 0.6413674627, green: 0.7296561239, blue: 0.7568627596, alpha: 1)]
     
     private let gameCardColor = ["flags":      #colorLiteral(red: 0.3455402499, green: 0.9984180331, blue: 0.7153486602, alpha: 1),
-                        "faces":       #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1),
-                        "sports":      #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1),
-                        "animals":     #colorLiteral(red: 0.9098039269, green: 0.4784313738, blue: 0.6431372762, alpha: 1),
-                        "fruits":      #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1),
-                        "appliances":  #colorLiteral(red: 0.3752103863, green: 0.5510096898, blue: 0.7568627596, alpha: 1)]
+                                "faces":       #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1),
+                                "sports":      #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1),
+                                "animals":     #colorLiteral(red: 0.9098039269, green: 0.4784313738, blue: 0.6431372762, alpha: 1),
+                                "fruits":      #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1),
+                                "appliances":  #colorLiteral(red: 0.3752103863, green: 0.5510096898, blue: 0.7568627596, alpha: 1)]
     
     // MARK: - Auxiliary Methods
     
@@ -62,7 +69,7 @@ class ViewController: UIViewController {
     
     @IBAction private func touchCard(_ sender: UIButton) {
         if !choseThemeAlready {
-            chooseRandomTheme()
+            //chooseRandomTheme()
         }
         
         if let cardNumber = cardButtons.index(of: sender) {
@@ -80,24 +87,26 @@ class ViewController: UIViewController {
     
     private func updateViewFromModel() {
         
-        newGameButton.backgroundColor = buttonsColor
-        newGameButton.setTitleColor(backgroundColor, for: UIControlState.normal)
+//        newGameButton.backgroundColor = buttonsColor
+//        newGameButton.setTitleColor(backgroundColor, for: UIControlState.normal)
+//
+//        flipCountLabel.textColor = buttonsColor
+//        scoreLabel.textColor = buttonsColor
+//
+//        self.view.backgroundColor = backgroundColor
         
-        flipCountLabel.textColor = buttonsColor
-        scoreLabel.textColor = buttonsColor
-        
-        self.view.backgroundColor = backgroundColor
-        
-        for index in cardButtons.indices {
-            let button = cardButtons[index]
-            let card = game.cards[index]
-            
-            if card.isFaceUp {
-                button.setTitle(emoji(for: card), for: UIControlState.normal)
-                button.backgroundColor = #colorLiteral(red: 0.9999960065, green: 1, blue: 1, alpha: 1)
-            } else {
-                button.setTitle("", for: UIControlState.normal)
-                button.backgroundColor = card.isMatched ? #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 0) : buttonsColor
+        if cardButtons != nil {
+            for index in cardButtons.indices {
+                let button = cardButtons[index]
+                let card = game.cards[index]
+                
+                if card.isFaceUp {
+                    button.setTitle(emoji(for: card), for: UIControlState.normal)
+                    button.backgroundColor = #colorLiteral(red: 0.9999960065, green: 1, blue: 1, alpha: 1)
+                } else {
+                    button.setTitle("", for: UIControlState.normal)
+                    button.backgroundColor = card.isMatched ? #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 0) : buttonsColor
+                }
             }
         }
     }
@@ -118,7 +127,7 @@ class ViewController: UIViewController {
         emoji.removeAll()
         
         game.resetGame()
-        chooseRandomTheme()
+        //chooseRandomTheme()
         game.shuffleCards()
         updateViewFromModel()
     }

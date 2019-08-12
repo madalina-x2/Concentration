@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C5569FC222FD8ABB0051DE41 /* ThemeChooserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5569FC122FD8ABB0051DE41 /* ThemeChooserViewController.swift */; };
 		C57DADCE22CA57A3001E09D2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57DADCD22CA57A3001E09D2 /* AppDelegate.swift */; };
 		C57DADD022CA57A3001E09D2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57DADCF22CA57A3001E09D2 /* ViewController.swift */; };
 		C57DADD322CA57A3001E09D2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C57DADD122CA57A3001E09D2 /* Main.storyboard */; };
@@ -36,6 +37,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C5569FC122FD8ABB0051DE41 /* ThemeChooserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeChooserViewController.swift; sourceTree = "<group>"; };
 		C57DADCA22CA57A3001E09D2 /* Concentration.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Concentration.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C57DADCD22CA57A3001E09D2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C57DADCF22CA57A3001E09D2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -105,6 +107,7 @@
 				C57DADFE22CB5BA5001E09D2 /* Card.swift */,
 				C57DADCF22CA57A3001E09D2 /* ViewController.swift */,
 				C57DADD122CA57A3001E09D2 /* Main.storyboard */,
+				C5569FC122FD8ABB0051DE41 /* ThemeChooserViewController.swift */,
 				C57DADD422CA57A5001E09D2 /* Assets.xcassets */,
 				C57DADFB22CA5A6F001E09D2 /* Supporting Files */,
 				C57DADD922CA57A5001E09D2 /* Info.plist */,
@@ -273,6 +276,7 @@
 				C57DADD022CA57A3001E09D2 /* ViewController.swift in Sources */,
 				C57DADCE22CA57A3001E09D2 /* AppDelegate.swift in Sources */,
 				C57DADFD22CB5AAB001E09D2 /* Concentration.swift in Sources */,
+				C5569FC222FD8ABB0051DE41 /* ThemeChooserViewController.swift in Sources */,
 				C57DADFF22CB5BA5001E09D2 /* Card.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
